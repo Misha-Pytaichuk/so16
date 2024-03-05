@@ -4,6 +4,7 @@ import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import my.app.calculationsserviceso16.dto.DatesRequest;
 import my.app.calculationsserviceso16.dto.dataForCalculation.AllDataRequest;
+import my.app.calculationsserviceso16.dto.dataForCalculation.SewingAccessories;
 import my.app.calculationsserviceso16.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -19,7 +20,7 @@ import java.util.Set;
 public class CalculationController {
     private final OrderService orderService;
 
-    @GetMapping()
+    @GetMapping("/range")
     @ResponseStatus(HttpStatus.OK)
     public void getCalculationsForDateDiapason(@RequestBody DatesRequest datesRequest, BindingResult bindingResult){
 
@@ -63,17 +64,22 @@ public class CalculationController {
         System.out.println(orderService.getPrice(dateTimeFrom, currentDate));
     }
 
-    @GetMapping("/calculation")
+    @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    public void calculationOfCost(@RequestBody AllDataRequest allDataRequest){
-        double res = ((allDataRequest.getCloth()*allDataRequest.getSmCloth())
-                +(allDataRequest.getLining()*allDataRequest.getSmLining())
-                +allDataRequest.getSeamstress()
-                +allDataRequest.getPackaging()
-                +(allDataRequest.getSewingAccessories().getZipper()*allDataRequest.getSewingAccessories().getZipperCount())
-                +(allDataRequest.getSewingAccessories().getThreadSpool()*allDataRequest.getSewingAccessories().getThreadSpoolCount())
-                +(allDataRequest.getSewingAccessories().getButtons()*allDataRequest.getSewingAccessories().getButtonsCount()))
-                *(allDataRequest.getMarkup()/100);
-        System.out.println(res);
+    public Double calculationOfCost(@RequestBody AllDataRequest allDataRequest){
+        double clothCost = allDataRequest.getClothCost() * allDataRequest.getSmCloth();
+        double liningCost = allDataRequest.getLiningCost() * allDataRequest.getSmLining();
+        double seamstressCost = allDataRequest.getSeamstressCost();
+        double packagingCost = allDataRequest.getPackagingCost();
+
+        SewingAccessories accessories = allDataRequest.getSewingAccessories();
+        double zipperCost = accessories.getZipperCost() * accessories.getZipperCount();
+        double threadSpoolCost = accessories.getThreadSpoolCost() * accessories.getThreadSpoolCount();
+        double buttonsCost = accessories.getButtonsCost() * accessories.getButtonsCount();
+
+        double cost = (clothCost + liningCost + seamstressCost + packagingCost + zipperCost + threadSpoolCost + buttonsCost);
+        double totalCost = (cost * allDataRequest.getMarkup() / 100) + cost;
+        System.out.println(totalCost);
+        return totalCost;
     }
 }

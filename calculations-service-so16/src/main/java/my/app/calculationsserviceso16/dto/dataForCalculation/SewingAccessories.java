@@ -8,10 +8,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SewingAccessories {
-    private double zipper;
+    private double zipperCost;
     private int zipperCount;
-    private double threadSpool;
+    private double threadSpoolCost;
     private int threadSpoolCount;
-    private double buttons;
+    private double buttonsCost;
     private int buttonsCount;
 }

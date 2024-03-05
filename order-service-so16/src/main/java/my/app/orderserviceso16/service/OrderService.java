@@ -146,10 +146,16 @@ public class OrderService {
     private String createNameForOrder(List<OrderLineItems> orderLineItems){
         StringBuilder orderNameBuilder = new StringBuilder();
         for (OrderLineItems oli: orderLineItems){
+            if(orderLineItems.indexOf(oli) == 3) break;
             orderNameBuilder.append(oli.getItemName()).append("(").append(oli.getQuantity()).append(") | ");
         }
         String orderName = orderNameBuilder.toString();
-        return orderName.substring(0, orderName.length()-2);
+        String sub = orderName.substring(0, orderName.length() - 3);
+        if(orderLineItems.size() <= 3){
+            return sub;
+        } else {
+            return sub + "...";
+        }
     }
 
     private Order findOrder(String orderNumber){

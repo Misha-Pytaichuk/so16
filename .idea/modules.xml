@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/calculations-service-so16.iml" filepath="$PROJECT_DIR$/calculations-service-so16.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/os-16-parent.iml" filepath="$PROJECT_DIR$/.idea/os-16-parent.iml" />
     </modules>
   </component>

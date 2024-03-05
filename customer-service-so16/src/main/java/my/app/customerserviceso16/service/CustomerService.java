@@ -59,7 +59,7 @@ public class CustomerService {
 
         List<OrderResponse> orderResponseList = webClientBuilder.build().get()
                 .uri("http://localhost:8081", uriBuilder -> uriBuilder
-                        .path("/api/v1/order/[customerId]}")
+                        .path("/api/v1/order/{customerId}")
                         .build(customer.getId()))
                 .retrieve()
                 .bodyToFlux(OrderResponse.class)

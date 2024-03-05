@@ -12,6 +12,5 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findOrderByOrderNumber(String orderNumber);
     List<Order> findOrdersByCustomerId(Long customerId);
-
     List<Order> findOrdersByCreatedAtBetween(LocalDateTime after, LocalDateTime before);
 }
